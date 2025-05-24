@@ -8,7 +8,7 @@ import math
 
 app = Flask(__name__)
 data = pd.read_csv('Bengaluru_House_Cleaned_Data.csv')
-pipe = pickle.load(open('GBRModel.pkl','rb'))
+pipe = pickle.load(open('RidgeModel.pkl','rb'))
 
 @app.route('/')
 
