@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>House Price Predictor</title>
+
+    <style>
+
+
+      body {
+        
+        background-color: #FEFBF3; /* Keep the dark background */
+        font-size: 1em;
+        font-family: "Inter";
+        min-height: 100vh; /* Ensure body takes at least the full viewport height */
+        margin: 0; /* Remove default body margin */      
+        /* display: flex; /* Enable Flexbox */
+  
+        justify-content: center; /* Center content horizontally */
+        align-items: center; /* Center content vertically */
+        
+      }
+      
+
+
+        .card{
+        background-color: #2B2B2B;
+        color: #E5E5E5;
+
+      }
+
+       .card-header {
+        background-color: #313131;
+        color: #E5E5E5; /* Change text color to white for better contrast */
+        padding-top: 20px;
+
+      }
+
+      .card-body{
+        padding-top: 20px;
+      }
+
+      /* Custom style for the predict button (from previous example) */
+      #predictButton {
+        background-color: #4C8CA6; /* Green background */
+        border-color: #4C8CA6; /* Green border */
+        color: rgb(241, 241, 241); /* White text */
+        font-size: 1.2em; /* Larger font size */
+        font-family: "Inter";
+        font-weight: 600;
+        margin-top: 20px; /* Add some space above */
+      }
+
+      #predictButton:hover {
+        background-color: #34758f; /* Darker green on hover */
+        border-color: #34758f; /* Darker border on hover */
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div class="container">
+        <div class="row">
+            <div class="card" style="width: 100%; height: 100%; margin-top: 60px;">
+
+                  <div class="card-header" style="text-align: center;">
+                    <h2>Welcome To House Price Predicator</h2>
+                  </div>
+
+
+                  <div class="card-body">
+
+                    <form method="post" action='/predict' accept-charset="utf-8" enctype="multipart/form-data" id="form">
+
+                        <div class="row">
+
+                          <div class=" col-md-6 form-group" style="text-align: left;">
+                            <label><b>Select The Location:</b></label>
+
+                            <select class="selectpicker form-control" id="location" name="location" required="1">
+                              {% for location in locations %}
+                              <option value="{{location}}">{{ location }}</option>
+                              {% endfor %}
+                            </select>
+
+                          </div>
+
+
+                          <div class=" col-md-6 form-group" style="text-align: left;">
+                            <label><b>Select The Area Type:</b></label>
+
+                            <select class="selectpicker form-control" id="area_type" name="area_type" required="1">
+                              {% for area_type in area_type %}
+                              <option value="{{area_type}}">{{ area_type }}</option>
+                              {% endfor %}
+                            </select>
+
+                          </div>
+
+                          <div class=" col-md-6 form-group" style="text-align: left;">
+                            <label><b>Enter No Of Balcony:</b></label>
+
+                            <input type="text" class="form-control" id="balcony" name="balcony" placeholder="Enter No of Balcony"  required="1">
+
+                            </select>
+                          </div>
+
+
+
+
+                          <div class=" col-md-6 form-group" style="text-align: left;">
+                            <label><b>Enter Required BHK:</b></label>
+
+                            <input type="text" class="form-control" id="bhk" name="bhk" placeholder="Enter BHK"  required="1">
+
+                            </select>
+                          </div>
+
+
+                          <div class=" col-md-6 form-group" style="text-align: left;">
+                            <label><b>Enter No Of Bathrooms:</b></label>
+
+                            <input type="text" class="form-control" id="bath" name="bath" placeholder="Enter No of Bathrooms"  required="1">
+
+                            </select>
+                          </div>
+
+                          <div class=" col-md-6 form-group" style="text-align: left;">
+                            <label><b>Enter Square Feet:</b></label>
+
+                            <input type="text" class="form-control" id="total_sqft" name="total_sqft" placeholder="Enter Square Feet"  required="1">
+
+                            </select>
+
+
+                          </div>
+
+                          <div class="col-md-12 form-group">
+                              <button class="btn btn-primary form-control" onclick="send_data()" id="predictButton">Predict Price</button>
+                          </div>
+
+
+                        </div>
+
+                    </form>
+
+                    <br>
+                    <div class="col-md-12" style="text-align: center;">
+                      <h3><span id="prediction"></span></h3>
+                    </div>
+
+                  </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+      function form_handler(event){
+
+        event.preventDefault();   // don't submit the form normally prevents form going to next event
+      }
+
+      function send_data(){
+
+        document.getElementById('form').addEventListener('submit',form_handler);
+        var fd = new FormData(document.querySelector('form'));
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST','/predict',true);
+
+        document.getElementById('prediction').innerHTML='Wait Predicting Price!....';
+
+        xhr.onreadystatechange = function() {
+          if(xhr.readyState == XMLHttpRequest.DONE){
+            document.getElementById('prediction').innerHTML='Prediction: '+xhr.responseText;
+          }
+        };
+
+        xhr.onload = function(){};
+        xhr.send(fd);
+
+      }
+
+    </script>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>
