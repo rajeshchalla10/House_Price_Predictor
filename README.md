@@ -11,8 +11,6 @@ This application predicts housing prices in Bengaluru using a Ridge Regression m
 - Built with Python, Flask, and scikit-learn.
 - Uses the Bengaluru Housing dataset for training.
 
-## Getting Started
-
 ### Prerequisites
 
 - Python 3.6 or higher.
@@ -20,3 +18,7 @@ This application predicts housing prices in Bengaluru using a Ridge Regression m
   ```bash
   pip install Flask scikit-learn pandas numpy
 
+### Usage
+Enter the required features of the house in the form.
+Click the 'Predict' button.
+The application will display the predicted house price.
