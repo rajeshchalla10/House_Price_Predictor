@@ -1,4 +1,4 @@
-# Housing Price Prediction Application
+# Housing Price Predictor Application
 ## Introduction
 
 This application predicts housing prices in Bengaluru using a Ridge Regression model. It is built using Python, Flask, and scikit-learn. The model is trained on the Bengaluru Housing dataset, which contains various features related to houses like location, area, number of bedrooms, etc.
