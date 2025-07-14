@@ -19,5 +19,5 @@ This application predicts housing prices in Bengaluru using a Ridge Regression m
 
 ## Usage
 Enter the required features of the house in the form.
-Click the 'Predict' button.
+Click the 'Predict Price' button.
 The application will display the predicted house price.
